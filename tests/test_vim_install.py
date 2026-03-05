@@ -48,7 +48,6 @@ def test_install_backs_up_existing_vimrc(tmp_path):
     env = {**os.environ, "HOME": str(tmp_path)}
     result = _run([], env=env)
     assert result.returncode == 0
-    # 备份目录 .config_backup_* 应存在
     backups = list(tmp_path.glob(".config_backup_*"))
     assert len(backups) > 0, "应创建备份目录"
     backup_vimrc = backups[0] / ".vimrc"
@@ -60,6 +59,5 @@ def test_install_succeeds_without_existing_vimrc(tmp_path):
     env = {**os.environ, "HOME": str(tmp_path)}
     result = _run([], env=env)
     assert result.returncode == 0
-    # 无备份目录
     backups = list(tmp_path.glob(".config_backup_*"))
     assert len(backups) == 0, "无旧文件时不应创建备份"
